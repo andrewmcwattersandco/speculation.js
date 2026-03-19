@@ -180,6 +180,7 @@
     if (el.target) return false;
     if (el.origin !== location.origin) return false;
     if (el.href === currentUrl) return false;
+    if (el.hash && el.pathname === location.pathname) return false;
     return true;
   }
 
