@@ -5,6 +5,8 @@
   window._speculation = true;
 
   // Speculation rules
+  // https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API#browser_compatibility
+  // https://caniuse.com/?search=speculation-rules
   if ("chrome" in window && HTMLScriptElement.supports?.("speculationrules")) {
     const script = document.createElement("script");
     script.type = "speculationrules";
