@@ -218,7 +218,7 @@
 
   // Click
   document.addEventListener("click", (e) => {
-    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.button !== 0) return;
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     const link = e.target.closest("a");
     if (!isEligible(link)) return;
     e.preventDefault();
