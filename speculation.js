@@ -166,9 +166,6 @@
     for (const el of toRemove) el.remove();
 
     document.body.replaceWith(doc.body);
-    document.body.setAttribute("tabindex", "-1");
-    document.body.focus();
-    document.body.removeAttribute("tabindex");
     reexecuteScripts(document.body);
     scrollTo({ top: scrollY ?? 0, behavior: "instant" });
   }
