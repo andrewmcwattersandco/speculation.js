@@ -233,7 +233,7 @@
         location.href = url;
         return;
       }
-      history.replaceState({ scrollY }, "", currentUrl);
+      history.replaceState({ scrollY: window.scrollY }, "", currentUrl);
       currentUrl = entry.url;
       history.pushState({ scrollY: 0 }, "", currentUrl);
       swapPage(entry, 0, id);
@@ -247,7 +247,7 @@
 
   // Save scroll position before any navigation
   addEventListener("pagehide", () => {
-    history.replaceState({ scrollY }, "", location.href);
+    history.replaceState({ scrollY: window.scrollY }, "", location.href);
   });
 
   // Popstate
