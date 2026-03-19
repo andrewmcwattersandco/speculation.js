@@ -198,6 +198,7 @@
 
   // Mousedown
   document.addEventListener("mousedown", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     const link = e.target.closest("a");
     if (!isEligible(link)) return;
     if (link.href === currentFetchUrl) return;
