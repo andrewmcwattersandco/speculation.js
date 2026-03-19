@@ -111,9 +111,10 @@
     const currentPrints = new Set(current.map(fingerprint));
     const incomingPrints = new Set(incoming.map(fingerprint));
 
-    for (const el of current) {
-      if (!incomingPrints.has(fingerprint(el))) el.remove();
-    }
+    // Collect removals but don't apply yet
+    const toRemove = current.filter(
+      (el) => !incomingPrints.has(fingerprint(el)),
+    );
 
     const newStylesheets = [];
     for (const el of incoming) {
@@ -125,7 +126,8 @@
       }
     }
 
-    return newStylesheets;
+    // Defer non-stylesheet removals too — no reason to do them early
+    return { newStylesheets, toRemove };
   }
 
   function reexecuteScripts(body) {
@@ -144,7 +146,7 @@
 
   async function swapPage(entry, scrollY, id) {
     const doc = new DOMParser().parseFromString(entry.html, "text/html");
-    const newStylesheets = patchHead(doc);
+    const { newStylesheets, toRemove } = patchHead(doc);
 
     if (newStylesheets.length) {
       await Promise.all(
@@ -158,6 +160,8 @@
       );
       if (id !== navId) return;
     }
+
+    for (const el of toRemove) el.remove();
 
     document.body.replaceWith(doc.body);
     document.body.setAttribute("tabindex", "-1");
